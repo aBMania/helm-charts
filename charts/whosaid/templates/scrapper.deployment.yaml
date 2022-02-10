@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: scrapper
+  name: scrapper
+  namespace: {{ .Release.Namespace }}
+
+{{- with .Values.whosaid.annotations }}
+  annotations:
+{{- toYaml . | nindent 4 }}
+{{- end }}
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: scrapper
+  template:
+    metadata:
+{{- with .Values.whosaid.annotations }}
+      annotations:
+{{- toYaml . | nindent 8 }}
+{{- end }}
+
+      labels:
+        app: scrapper
+    spec:
+{{- with .Values.whosaid.nodeSelector }}
+      nodeSelector:
+{{- toYaml . | nindent 8 }}
+{{- end }}
+
+      containers:
+        - image: "registry.gitlab.com/mania-dev/whosaid3/scrapper:{{ .Values.whosaid.tag }}"
+          imagePullPolicy: IfNotPresent
+          name: scrapper
+          env:
+            - name: DISCORD_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  key: token
+                  name: scrapper-config
+            - name: LOG_LEVEL
+              value: {{ .Values.whosaid.scrapper.logLevel }}
+            - name: HASURA_HTTP_PROTOCOL
+              value: http
+            - name: HASURA_WS_PROTOCOL
+              value: ws
+            - name: HASURA_HOST
+              value: hasura
+            - name: HASURA_PORT
+              value: "80"
+            - name: HASURA_PATH
+              value: "/v1/graphql"
+            - name: HASURA_ADMIN_SECRET
+              value: {{ .Values.hasura.adminSecret }}
+          ports:
+            - containerPort: 3000
+              protocol: TCP
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "50m"
