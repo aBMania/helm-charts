@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: api
+  name: api
+  namespace: {{ .Release.Namespace }}
+
+{{- with .Values.whosaid.annotations }}
+  annotations:
+{{- toYaml . | nindent 4 }}
+{{- end }}
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+{{- with .Values.whosaid.annotations }}
+      annotations:
+{{- toYaml . | nindent 8 }}
+{{- end }}
+
+      labels:
+        app: api
+    spec:
+{{- with .Values.whosaid.nodeSelector }}
+      nodeSelector:
+{{- toYaml . | nindent 8 }}
+{{- end }}
+
+      containers:
+        - image: "registry.gitlab.com/mania-dev/whosaid3/api:{{ .Values.whosaid.tag }}"
+          imagePullPolicy: IfNotPresent
+          name: api
+          env:
+            - name: DISCORD_CLIENT_ID
+              value: {{ .Values.whosaid.client_id | quote }}
+            - name: DISCORD_CLIENT_SECRET
+              value: {{ .Values.whosaid.client_secret | quote }}
+            - name: DISCORD_ENDPOINT
+              value: https://discord.com/api/v8
+            - name: DISCORD_SCOPE
+              value: identity
+            - name: REDIRECT_URI
+              value: "https://{{- include "whosaid.environmentUrl" . }}/auth/discord"
+            - name: CORS_ORIGIN
+              value: "https://{{- include "whosaid.environmentUrl" . }}"
+
+          ports:
+            - containerPort: 3000
+              protocol: TCP
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "50m"

@@ -1,0 +1,116 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: hasura
+    hasuraService: custom
+  name: hasura
+  namespace: {{ .Release.Namespace }}
+
+{{- with .Values.whosaid.annotations }}
+  annotations:
+{{- toYaml . | nindent 4 }}
+{{- end }}
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hasura
+  template:
+    metadata:
+{{- with .Values.whosaid.annotations }}
+      annotations:
+{{- toYaml . | nindent 8 }}
+{{- end }}
+
+      labels:
+        app: hasura
+    spec:
+{{- with .Values.whosaid.nodeSelector }}
+      nodeSelector:
+{{- toYaml . | nindent 8 }}
+{{- end }}
+
+      initContainers:
+        - name: create-db
+          image: postgres:12
+          env:
+            - name: PGUSER
+              valueFrom:
+                secretKeyRef:
+                  name: hasura-config
+                  key: username
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: hasura-config
+                  key: password
+            - name: PGHOST
+              valueFrom:
+                secretKeyRef:
+                  name: hasura-config
+                  key: host
+            - name: PGPORT
+              valueFrom:
+                secretKeyRef:
+                  name: hasura-config
+                  key: port
+            - name: PGDATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: hasura-config
+                  key: maintenancedb
+            - name: PGSSLMODE
+              value: "require"
+            - name: NEWDB
+              value: "{{- include "hasura.dbName" . }}"
+          command:
+            - sh
+            - -c
+          args:
+            - echo "SELECT 'CREATE DATABASE $NEWDB' WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = '$NEWDB')\\gexec" | psql
+
+        - name: hasura-migrations
+          image: "registry.gitlab.com/mania-dev/whosaid3/hasura-migration:{{ .Values.whosaid.tag }}"
+          env:
+            - name: HASURA_GRAPHQL_ADMIN_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: hasura-config
+                  key: adminSecret
+            - name: HASURA_GRAPHQL_DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: hasura-config
+                  key: uri
+      containers:
+        - image: {{ .Values.hasura.image }}
+          imagePullPolicy: IfNotPresent
+          name: hasura
+          env:
+            - name: HASURA_GRAPHQL_ADMIN_SECRET
+              value: {{ .Values.hasura.adminSecret }}
+            - name: HASURA_GRAPHQL_DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: hasura-config
+                  key: uri
+            ## enable the console served by server
+            - name: HASURA_GRAPHQL_ENABLE_CONSOLE
+              value: "{{ .Values.hasura.enableConsole }}"
+            ## enable debugging mode. It is recommended to disable this in production
+            - name: HASURA_GRAPHQL_DEV_MODE
+              value: "{{ .Values.hasura.devMode }}"
+            - name: HASURA_GRAPHQL_CORS_DOMAIN
+              value: "https://{{- include "whosaid.environmentUrl" . }}"
+            - name: HASURA_GRAPHQL_AUTH_HOOK
+              value: http://api/hasura/webhook
+
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "50m"

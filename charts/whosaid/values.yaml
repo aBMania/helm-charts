@@ -1,0 +1,27 @@
+whosaid:
+  domain: whosaid.mania-dev.com
+  env: dev
+  tag: latest
+  token: ~
+  client_id: ~
+  client_secret: ~
+  annotations: {}
+  bot:
+    logLevel: debug
+
+  scrapper:
+    logLevel: debug
+
+hasura:
+  image: hasura/graphql-engine:v1.3.3
+  adminSecret: adminSecret
+  enableConsole: true
+  devMode: true
+
+postgresql:
+  postgresqlPort: 5432
+  postgresqlHost: postgresHost
+  postgresqlUsername: postgres
+  postgresqlPassword: postgrespassword
+  postgresqlPostgresPassword: postgrespassword
+  postgresqlDatabase: hasura

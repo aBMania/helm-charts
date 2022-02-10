@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: scrapper
+  name: scrapper
+  namespace: {{ .Release.Namespace }}
+{{- with .Values.whosaid.annotations }}
+  annotations:
+{{- toYaml . | nindent 4 }}
+{{- end }}
+
+spec:
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 3000
+  selector:
+    app: scrapper
+  type: NodePort
