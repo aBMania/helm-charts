@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  whosaid:
+  - apiVersion: v2
+    appVersion: 1.16.1
+    created: "2022-02-10T20:49:10.068872913Z"
+    description: A Helm chart for Kubernetes
+    digest: 2a6e92bf1a8b3e45da0e55412684cd1f7f234f5946120488b816b432bfea3ccb
+    name: whosaid
+    type: application
+    urls:
+    - https://github.com/aBMania/helm-charts/releases/download/whosaid-0.1.2/whosaid-0.1.2.tgz
+    version: 0.1.2
+generated: "2022-02-10T20:49:09.915867169Z"
