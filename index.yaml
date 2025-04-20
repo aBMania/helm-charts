@@ -1,5 +1,27 @@
 apiVersion: v1
 entries:
+  authelia:
+  - apiVersion: v2
+    appVersion: 4.39.1
+    created: "2025-04-20T20:58:08.831218551Z"
+    dependencies:
+    - name: common
+      repository: oci://tccr.io/truecharts
+      version: 25.4.10
+    description: Whosaid discord bot
+    digest: bfcd922045adb2978321d06ab7e00edd4ad7e77e006e80fba293d730bb610b31
+    keywords:
+    - whosaid
+    - discord
+    - bot
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - name: Sylvain Bossut
+    name: authelia
+    type: application
+    urls:
+    - https://github.com/aBMania/helm-charts/releases/download/authelia-0.0.1/authelia-0.0.1.tgz
+    version: 0.0.1
   whosaid:
   - apiVersion: v2
     appVersion: 1.16.1
@@ -11,4 +33,4 @@ entries:
     urls:
     - https://github.com/aBMania/helm-charts/releases/download/whosaid-0.1.2/whosaid-0.1.2.tgz
     version: 0.1.2
-generated: "2022-02-10T20:49:09.915867169Z"
+generated: "2025-04-20T20:58:08.831228389Z"
