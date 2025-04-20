@@ -1,0 +1,22 @@
+image:
+  repository: ghcr.io/abmania/whosaid-rs
+  pullPolicy: IfNotPresent
+  tag: main@sha256:3d65554884963f8fddd37cb8364432e053e23513895e0eb68826605c60828013
+
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          env:
+            WHOSAID_DISCORD_TOKEN: "DISCORD_TOKEN"
+            WHOSAID_DATABASE_URL:
+              secretKeyRef:
+                name: cnpg-main-urls
+                key: std
+
+cnpg:
+  main:
+    enabled: true
+    user: whosaid
+    database: whosaid

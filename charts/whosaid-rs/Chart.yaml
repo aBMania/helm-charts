@@ -1,0 +1,22 @@
+apiVersion: v2
+appVersion: 4.39.1
+dependencies:
+  - name: common
+    version: 25.4.10
+    repository: oci://tccr.io/truecharts
+    condition: ""
+    alias: ""
+    tags: []
+    import-values: []
+deprecated: false
+description: Whosaid discord bot
+keywords:
+  - whosaid
+  - discord
+  - bot
+kubeVersion: '>=1.24.0-0'
+maintainers:
+  - name: Sylvain Bossut
+name: authelia
+type: application
+version: 0.0.1
