@@ -15,6 +15,13 @@ workload:
                 name: cnpg-main-urls
                 key: std
 
+service:
+  main:
+    enabled: false
+    ports:
+      main:
+        enabled: false
+
 cnpg:
   main:
     enabled: true
