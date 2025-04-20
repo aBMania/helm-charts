@@ -54,4 +54,26 @@ entries:
     urls:
     - https://github.com/aBMania/helm-charts/releases/download/whosaid-0.1.2/whosaid-0.1.2.tgz
     version: 0.1.2
-generated: "2025-04-20T21:13:38.070281441Z"
+  whosaid-rs:
+  - apiVersion: v2
+    appVersion: 0.0.1
+    created: "2025-04-20T21:33:16.010791693Z"
+    dependencies:
+    - name: common
+      repository: oci://tccr.io/truecharts
+      version: 25.4.10
+    description: Whosaid discord bot
+    digest: 09b735362df29a4f641c0291b063aba22201facc7068a91dfff6c24bf2c45c83
+    keywords:
+    - whosaid
+    - discord
+    - bot
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - name: Sylvain Bossut
+    name: whosaid-rs
+    type: application
+    urls:
+    - https://github.com/aBMania/helm-charts/releases/download/whosaid-rs-0.0.2/whosaid-rs-0.0.2.tgz
+    version: 0.0.2
+generated: "2025-04-20T21:33:16.010804316Z"
