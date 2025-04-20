@@ -15,6 +15,13 @@ workload:
                 name: cnpg-main-urls
                 key: std
 
+          probes:
+            liveness:
+              enabled: false
+            readiness:
+              enabled: false
+            startup:
+              enabled: false
 service:
   main:
     enabled: false

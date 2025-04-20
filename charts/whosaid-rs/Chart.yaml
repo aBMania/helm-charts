@@ -19,4 +19,4 @@ maintainers:
   - name: Sylvain Bossut
 name: whosaid-rs
 type: application
-version: 0.0.3
+version: 0.0.4
