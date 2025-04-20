@@ -17,6 +17,6 @@ keywords:
 kubeVersion: '>=1.24.0-0'
 maintainers:
   - name: Sylvain Bossut
-name: authelia
+name: whosaid-rs
 type: application
 version: 0.0.2
