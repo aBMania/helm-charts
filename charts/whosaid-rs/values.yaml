@@ -1,7 +1,7 @@
 image:
   repository: ghcr.io/abmania/whosaid-rs
   pullPolicy: IfNotPresent
-  tag: main@sha256:394cee3436780e493894a38314ca6b1d56e13e559754b9b179dd6b965bfd255e
+  tag: main@sha256:188df2bc01a22207f347d0a8efc8d8eb5b2cfa8908b00e4375e7f85a19239786
 
 workload:
   main:
