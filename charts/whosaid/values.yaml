@@ -13,7 +13,7 @@ whosaid:
     logLevel: debug
 
 hasura:
-  image: hasura/graphql-engine:v1.3.3
+  image: hasura/graphql-engine:v1.3.4
   adminSecret: adminSecret
   enableConsole: true
   devMode: true
