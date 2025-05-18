@@ -2,7 +2,7 @@ apiVersion: v2
 appVersion: 0.0.1
 dependencies:
   - name: common
-    version: 25.4.10
+    version: 28.6.4
     repository: oci://tccr.io/truecharts
     condition: ""
     alias: ""
@@ -19,4 +19,4 @@ maintainers:
   - name: Sylvain Bossut
 name: whosaid-rs
 type: application
-version: 0.0.5
+version: 0.1.0
