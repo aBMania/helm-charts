@@ -34,3 +34,9 @@ cnpg:
     enabled: true
     user: whosaid
     database: whosaid
+
+# common >= 25 sets hostUsers: false on Kubernetes >= 1.33 (user namespaces).
+# Talos disables user namespaces (user.max_user_namespaces=0), so pods fail
+# with "failed to start noop process for unshare: no space left on device".
+podOptions:
+  hostUsers: true
