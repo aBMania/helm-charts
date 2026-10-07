@@ -2,7 +2,7 @@ apiVersion: v2
 appVersion: 0.0.1
 dependencies:
   - name: common
-    version: 30.0.1
+    version: 30.1.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -19,4 +19,4 @@ maintainers:
   - name: Sylvain Bossut
 name: whosaid-rs
 type: application
-version: 0.0.6
+version: 0.1.0
